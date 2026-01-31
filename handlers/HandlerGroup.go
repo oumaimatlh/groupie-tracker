@@ -2,7 +2,6 @@ package Handlers
 
 import (
 	"encoding/json"
-	"fmt"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -23,9 +22,11 @@ type Relations struct {
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
 
-var location Locations
-var dates Dates
-var relations Relations
+var (
+	location  Locations
+	dates     Dates
+	relations Relations
+)
 
 func HandlerGroupe(w http.ResponseWriter, r *http.Request) {
 	idStr := r.URL.Query().Get("id")
@@ -66,44 +67,44 @@ func HandlerGroupe(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Locations
-	locResp, err := http.Get(data.Artist.Locations)
+	// ---------------------------------//
+	loc, err := http.Get(data.Artist.Locations)
 	if err != nil {
 		HandleError(w, http.StatusInternalServerError, "Impossible de récupérer les lieux")
 		return
 	}
-	defer locResp.Body.Close()
-	if err := json.NewDecoder(locResp.Body).Decode(&location); err != nil {
+	defer loc.Body.Close()
+	if err := json.NewDecoder(loc.Body).Decode(&location); err != nil {
 		HandleError(w, http.StatusInternalServerError, "Erreur décodage des lieux")
 		return
 	}
 	data.Locations = location.Locations
 
-	// ConcertDates
-	dateResp, err := http.Get(data.Artist.ConcertDates)
+	// ---------------------------------//
+	date, err := http.Get(data.Artist.ConcertDates)
 	if err != nil {
 		HandleError(w, http.StatusInternalServerError, "Impossible de récupérer les dates de concert")
 		return
 	}
-	defer dateResp.Body.Close()
-	if err := json.NewDecoder(dateResp.Body).Decode(&dates); err != nil {
+	defer date.Body.Close()
+	if err := json.NewDecoder(date.Body).Decode(&dates); err != nil {
 		HandleError(w, http.StatusInternalServerError, "Erreur décodage des dates de concert")
 		return
 	}
 	data.ConcertDates = dates.Dates
 
-	// Relations
-	relResp, err := http.Get(data.Artist.Relations)
+	// ---------------------------------//
+	relation, err := http.Get(data.Artist.Relations)
 	if err == nil {
-		defer relResp.Body.Close()
+		defer relation.Body.Close()
 		var relData Relations
-		if err := json.NewDecoder(relResp.Body).Decode(&relData); err != nil {
+		if err := json.NewDecoder(relation.Body).Decode(&relData); err != nil {
 			HandleError(w, http.StatusInternalServerError, "Erreur décodage des relations")
 			return
 		}
 		for loc, dates := range relData.DatesLocations {
 			for _, d := range dates {
-				data.Relations = append(data.Relations, fmt.Sprintf("%s : %s", loc, d))
+				data.Relations = append(data.Relations, loc+" : "+d)
 			}
 		}
 	}

@@ -15,7 +15,7 @@
    
     <div class="container">
         {{ range . }}
-            <a class="clickCard" href="/artist?name={{ .Name }}&id={{ .Id }}">
+            <a class="clickCard" href="/artist?id={{ .Id }}">
                 <div class="cards">
                     <img alt="Image" src="{{ .Image }}">
                     <p class="name">{{ .Name }}</p>
