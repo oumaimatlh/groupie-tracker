@@ -11,16 +11,15 @@ type Locations struct {
 	Idlocation int      `json:"id"`
 	Locations  []string `json:"locations"`
 }
-
 type Dates struct {
 	IdDates int      `json:"id"`
 	Dates   []string `json:"dates"`
 }
-
 type Relations struct {
 	Id             int                 `json:"id"`
 	DatesLocations map[string][]string `json:"datesLocations"`
 }
+
 
 var (
 	location  Locations
@@ -67,7 +66,7 @@ func HandlerGroupe(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// ---------------------------------//
+	// ----------------Locations-----------------//
 	loc, err := http.Get(data.Artist.Locations)
 	if err != nil {
 		HandleError(w, http.StatusInternalServerError, "Impossible de récupérer les lieux")
@@ -80,7 +79,7 @@ func HandlerGroupe(w http.ResponseWriter, r *http.Request) {
 	}
 	data.Locations = location.Locations
 
-	// ---------------------------------//
+	// ---------------ConcertDates------------------//
 	date, err := http.Get(data.Artist.ConcertDates)
 	if err != nil {
 		HandleError(w, http.StatusInternalServerError, "Impossible de récupérer les dates de concert")
@@ -93,7 +92,7 @@ func HandlerGroupe(w http.ResponseWriter, r *http.Request) {
 	}
 	data.ConcertDates = dates.Dates
 
-	// ---------------------------------//
+	// --------------Relations-------------------//
 	relation, err := http.Get(data.Artist.Relations)
 	if err == nil {
 		defer relation.Body.Close()

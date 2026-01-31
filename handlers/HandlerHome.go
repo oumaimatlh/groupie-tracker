@@ -25,7 +25,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, http.StatusNotFound, "Page non trouvée")
 		return
 	}
-
 	res, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
 	if err != nil {
 		HandleError(w, http.StatusInternalServerError, "Impossible de récupérer les artistes")
@@ -44,6 +43,5 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		HandleError(w, http.StatusInternalServerError, "Erreur lors du chargement de la page")
 		return
 	}
-
 	tmpl.Execute(w, artistes)
 }

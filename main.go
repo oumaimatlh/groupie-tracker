@@ -15,8 +15,6 @@ func main() {
 			http.FileServer(http.Dir("web/static")),
 		),
 	)
-
-
 	http.HandleFunc("/", Handlers.Home)
 	http.HandleFunc("/artist/", Handlers.HandlerGroupe)
 
