@@ -12,15 +12,15 @@
         ConcertHub
     </h1>
 
+   
     <div class="container">
-        {{ range $i, $artist := . }}
-            <button class="clickCard"><div class="cards">
-                <img alt="Image" src="{{ $artist.Image }}" >
-                <p class="name">
-                    {{$artist.Name}}
-                </p>
-            </div>
-        </button>
+        {{ range . }}
+            <a class="clickCard" href="/artist?name={{ .Name }}&id={{ .Id }}">
+                <div class="cards">
+                    <img alt="Image" src="{{ .Image }}">
+                    <p class="name">{{ .Name }}</p>
+                </div>
+            </a>
         {{ end }}
     </div>
 

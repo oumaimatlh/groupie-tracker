@@ -1,16 +1,20 @@
 body {
-    background-image: url("6.jpg");
+    background-image: url("1");
     backdrop-filter: blur(5px);
 }
 
 
 h1{
-    color: white;
+
+    background:linear-gradient(to right, rgb(2, 41, 54), rgb(14, 69, 95));
+    -webkit-background-clip:text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
     text-align : center;
     font-family: fangsong;
     font-style: italic;
     font-size: 80px;
-    letter-spacing:5px
+    letter-spacing:5px;
 }
 
 .container{
@@ -50,10 +54,14 @@ img{
     border-radius: 20px;
 }
 .name{
-    color: white;
+    color: rgb(7, 39, 61);
     font-style: italic;
     font-weight: bold;
     font-size: medium;
     letter-spacing: 4px;
     font-family: fangsong;
 }
+
+
+
+

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/Artist.css">
+  <title>{{.Name}}</title>
+  
+</head>
+<body>
+  <h1>{{.Name}}</h1>
+
+  <div class="containerArtist">
+    <img src="{{.Image}}" alt="{{.Name}}">
+
+    <div class="artistInfo">
+      <h2>Membres :</h2>
+      <ul>
+        {{range .Members}}
+          <li>{{.}}</li>
+        {{end}}
+      </ul>
+
+      <p><strong>Année de création :</strong> {{.CreationDate}}</p>
+      <p><strong>Premier album :</strong> {{.FirstAlbum}}</p>
+
+
+
+    <div class="mt-3">
+      <details>
+        <summary>Locations</summary>
+        <ul>
+          {{range .Locations}}
+            <li>{{.}}</li>
+          {{end}}
+        </ul>
+      </details>
+
+      <details>
+        <summary>Concert Dates</summary>
+        <ul>
+          {{range .ConcertDates}}
+            <li>{{.}}</li>
+          {{end}}
+        </ul>
+      </details>
+
+      <details>
+        <summary>Relations</summary>
+        <ul>
+          {{range .Relations}}
+            <li>{{.}}</li>
+          {{end}}
+        </ul>
+      </details>
+    </div>
+
+
+      <a class="butt" href="/">Retour à l’accueil</a>
+
+    </div>
+
+  </div>
+</body>
+</html>

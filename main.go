@@ -16,7 +16,9 @@ func main() {
 		),
 	)
 
+
 	http.HandleFunc("/", Handlers.Home)
+	http.HandleFunc("/artist/", Handlers.HandlerGroupe)
 
 	http.ListenAndServe(":8080", nil)
 }

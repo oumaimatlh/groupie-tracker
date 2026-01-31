@@ -2,15 +2,12 @@ package Handlers
 
 import (
 	"encoding/json"
-	"fmt"
-	"html/template"
-	"log"
 	"net/http"
-	//"io"
+	"html/template"
 )
 
 type Artist struct {
-	ID           int      `json:"id"`
+	Id           int      `json:"id"`
 	Image        string   `json:"image"`
 	Name         string   `json:"name"`
 	Members      []string `json:"members"`
@@ -21,27 +18,32 @@ type Artist struct {
 	Relations    string   `json:"relations"`
 }
 
-func Home(w http.ResponseWriter, r *http.Request) {
+var artistes []Artist
 
+func Home(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
-		http.Error(w, "ERROR", 404)
+		HandleError(w, http.StatusNotFound, "Page non trouvée")
+		return
 	}
 
 	res, err := http.Get("https://groupietrackers.herokuapp.com/api/artists")
 	if err != nil {
-		fmt.Println(err)
+		HandleError(w, http.StatusInternalServerError, "Impossible de récupérer les artistes")
+		return
 	}
 	defer res.Body.Close()
 
-	var artistes []Artist
-
 	err = json.NewDecoder(res.Body).Decode(&artistes)
 	if err != nil {
-		log.Fatal(err)
+		HandleError(w, http.StatusInternalServerError, "Erreur lors du décodage des artistes")
+		return
 	}
 
-	template, _ := template.ParseFiles("./web/templates/home.html")
-	template.Execute(w, artistes)
+	tmpl, err := template.ParseFiles("./web/templates/home.html")
+	if err != nil {
+		HandleError(w, http.StatusInternalServerError, "Erreur lors du chargement de la page")
+		return
+	}
+
+	tmpl.Execute(w, artistes)
 }
-
-
