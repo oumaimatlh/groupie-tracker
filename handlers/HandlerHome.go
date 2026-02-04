@@ -2,8 +2,9 @@ package Handlers
 
 import (
 	"encoding/json"
-	"net/http"
+	"fmt"
 	"html/template"
+	"net/http"
 )
 
 type Artist struct {
@@ -44,4 +45,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	tmpl.Execute(w, artistes)
+
+	fmt.Println()
 }
